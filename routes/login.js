@@ -7,7 +7,7 @@ router.post('/', function (req, res, next) {
     const loginInfo =
         {
             username: 'sizhijian',
-            password: '123456'
+            password: 'e10adc3949ba59abbe56e057f20f883e'
         };
     res.header("Access-Control-Allow-Origin", "*");
     var returnInfo = {};
