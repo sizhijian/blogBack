@@ -15,16 +15,16 @@ var login = require('./routes/login')
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));//设置视图层路径
+app.set('view engine', 'ejs');//设置页面模板引擎
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(logger('dev'));//日志相关  //app.use(...); //挂载中间件
+app.use(bodyParser.json());//进行post参数的解析
+app.use(bodyParser.urlencoded({ extended: false }));//进行post参数的解析
+app.use(cookieParser());//进行cookie的解析
+app.use(express.static(path.join(__dirname, 'public')));//设置静态资源路径
 
 app.use('/', index);
 app.use('/users', users);
