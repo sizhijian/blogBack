@@ -9,7 +9,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 //
-var login = require('./routes/login')
+var register = require('./routes/register'),
+    login = require('./routes/login');
 //
 
 var app = express();
@@ -32,6 +33,7 @@ app.use('/users', users);
 /*
 * shop-api-begin
 * */
+app.use('/register', register);
 app.use('/login', login);
 /*
  * shop-api-end
