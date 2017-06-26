@@ -5,43 +5,60 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 //
 var register = require('./routes/register'),
-    login = require('./routes/login');
+    login = require('./routes/login'),
+    articles = require('./routes/articles'),
+    post = require('./routes/post');
 //
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));//设置视图层路径
-app.set('view engine', 'ejs');//设置页面模板引擎
+app.set('views', path.join(__dirname, 'views'));//设置 views 文件夹为存放视图文件的目录, 即存放模板文件的地方,__dirname 为全局变量,存储当前正在执行的脚本所在的目录
+app.set('view engine', 'ejs');//设置视图模板引擎为 ejs
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));//日志相关  //app.use(...); //挂载中间件
-app.use(bodyParser.json());//进行post参数的解析
-app.use(bodyParser.urlencoded({ extended: false }));//进行post参数的解析
-app.use(cookieParser());//进行cookie的解析
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));//设置/public/favicon.ico为favicon图标
+app.use(logger('dev'));//加载日志中间件
+app.use(bodyParser.json());//加载解析json的中间件
+app.use(bodyParser.urlencoded({ extended: false }));//加载解析urlencoded请求体的中间件。
+app.use(cookieParser());//加载解析cookie的中间件
 app.use(express.static(path.join(__dirname, 'public')));//设置静态资源路径
 
-app.use('/', index);
-app.use('/users', users);
-
+// app.use('/', index);
+// app.use('/users', users);
+// app.use(session({
+//     secret: 'blog',
+//     key: 'blog',//cookie name
+//     cookie: {maxAge: 1000 * 60 * 60 * 24 * 7},//7 days
+//     store: new MongoStore({
+//         db: 'shop',
+//         host: '192.168.1.62',
+//         port: 27017
+//     })
+// }));
 /*
 * shop-api-begin
 * */
 app.use('/register', register);
 app.use('/login', login);
+app.use('/articles', articles);
+app.use('/post', post);
 /*
  * shop-api-end
  * */
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('很抱歉，您要访问的页面不存在！');
   err.status = 404;
   next(err);
 });
@@ -49,7 +66,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
+    res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page

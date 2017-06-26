@@ -9,11 +9,6 @@ var User = mongoose.model('users', registerSchema);//将模式编译到模型中
 
 /* GET users listing. */
 router.post('/', function (req, res, next) {
-	const loginInfo =
-		{
-			username: 'sizhijian',
-			password: 'e10adc3949ba59abbe56e057f20f883e'
-		};
 	res.header("Access-Control-Allow-Origin", "*");
 	var returnInfo = {
 		state: null,

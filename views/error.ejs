@@ -1,3 +1,20 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= error.status %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<div class="error-info">
+    <p><%= message %></p>
+    <p>错误代码: <span class="error-code"><%= error.status %></span></p>
+</div>
+<pre class="error-stack"><%= error.stack %></pre>
+</body>
+</html>
+<script>
+
+</script>
+
+
+
