@@ -9,7 +9,7 @@ var Articles = mongoose.model('articles',registerSchema);//将模式编译到模
 
 /* GET users listing. */
 router.post('/', function (req, res, next) {
-    
+
     res.header("Access-Control-Allow-Origin", "*");
     var returnInfo = {
 	    state: null,
@@ -17,12 +17,20 @@ router.post('/', function (req, res, next) {
     };
     console.log(req.body);
     Articles.findOne({type: req.body.type},function (err, articles) {
-        console.log(articles)
         if(err){
             console.log(err)
         }else {
             if(articles) {
-                console.log("adadada")
+              let flag = false;
+              for (var i = 0; i < articles.contain.length; i++) {
+                if (articles.contain[i].title == req.body.title) {
+                  flag = false
+                }else{
+                  flag = true
+                }
+              }
+              if(flag){
+                console.log("没有相同标题的文章,可以正常插入");
                 articles.contain.push({
                     title: req.body.title,
                     content: req.body.content
@@ -41,8 +49,14 @@ router.post('/', function (req, res, next) {
                         res.send(returnInfo);
                     }
                 })
+              }else{
+                console.log("插入失败,已经存在相同标题的文章");
+                returnInfo.state = 0;
+                returnInfo.info = "发表失败,已经存在相同标题的文章";
+                res.send(returnInfo);
+              }
+
             }else {
-                console.log("passssssssssssssss")
                 Articles.create([{
                     type: req.body.type,
                     contain: [
