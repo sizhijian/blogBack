@@ -10,23 +10,20 @@ var Articles = mongoose.model('articles',registerSchema);//将模式编译到模
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-    
     res.header("Access-Control-Allow-Origin", "*");
-    var returnInfo = {
-	    state: null,
-	    info:""
-    };
-    console.log(req.body);
     Articles.find(function (err, doc) {
         if (err) {
-            console.log(err)
-            return''
+            console.log(err);
+            return;
         }
         if (doc) {
-        console.log(doc)
-            returnInfo.info = doc;
+            // console.log(doc);
+            var resulet = [];
+            doc.forEach(function (element) {
+                resulet.push(element.type)
+            });
+            res.send(resulet);
         }
-        res.send(returnInfo);
     });
 });
 

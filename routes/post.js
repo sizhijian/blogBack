@@ -1,9 +1,10 @@
 var express = require('express'),
     router = express.Router(),
 	registerSchema = require('../models/articles'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    dbUrl = require('../config/db.conf');
 
-mongoose.connect('mongodb://127.0.0.1:27017/blog');
+mongoose.connect(dbUrl.url);
 
 var Articles = mongoose.model('articles',registerSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
 

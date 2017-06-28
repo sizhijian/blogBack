@@ -16,6 +16,7 @@ var users = require('./routes/users');
 var register = require('./routes/register'),
     login = require('./routes/login'),
     articles = require('./routes/articles'),
+    articlesType = require('./routes/articlesType'),
     post = require('./routes/post');
 //
 
@@ -51,6 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')));//设置静态资源路�
 app.use('/register', register);
 app.use('/login', login);
 app.use('/articles', articles);
+app.use('/articlesType', articlesType);
 app.use('/post', post);
 /*
  * shop-api-end
