@@ -9,6 +9,7 @@ var articlesSchema = new Schema({
     contain: [
         {
             title: String,
+            author: String,
             content: String
         }
     ]

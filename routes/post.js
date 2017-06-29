@@ -17,6 +17,7 @@ router.post('/', function (req, res, next) {
 	    info:""
     };
     console.log(req.body);
+    // return;
     Articles.findOne({type: req.body.type},function (err, articles) {
         if(err){
             console.log(err)
@@ -34,6 +35,7 @@ router.post('/', function (req, res, next) {
                 console.log("没有相同标题的文章,可以正常插入");
                 articles.contain.push({
                     title: req.body.title,
+                    author: req.body.author,
                     content: req.body.content
                 });
                 articles.save(function (err) {
