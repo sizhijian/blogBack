@@ -1,12 +1,12 @@
 var express = require('express'),
     router = express.Router(),
-	registerSchema = require('../models/register'),
+    usersSchema = require('../models/users'),
     mongoose = require('mongoose'),
     dbUrl = require('../config/db.conf');
 
 mongoose.connect(dbUrl.url);
 
-var User = mongoose.model('users',registerSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
+var User = mongoose.model('users',usersSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
 
 /* GET users listing. */
 router.post('/', function (req, res, next) {
@@ -24,7 +24,7 @@ router.post('/', function (req, res, next) {
         nickname: req.body.nickname
     }],function (error) {
         if(error) {
-	        console.log(error)
+	        console.log(error);
 	        returnInfo.state = 0;
 	        returnInfo.info = "注册失败";
 	        res.send(returnInfo);

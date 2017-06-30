@@ -17,7 +17,8 @@ var register = require('./routes/register'),
     login = require('./routes/login'),
     articles = require('./routes/articles'),
     articlesType = require('./routes/articlesType'),
-    post = require('./routes/post');
+    post = require('./routes/post'),
+    modify = require('./routes/modify');
 //
 
 var app = express();
@@ -54,6 +55,7 @@ app.use('/login', login);
 app.use('/articles', articles);
 app.use('/articlesType', articlesType);
 app.use('/post', post);
+app.use('/modify', modify);
 /*
  * shop-api-end
  * */

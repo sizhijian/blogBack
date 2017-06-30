@@ -1,12 +1,12 @@
 var express = require('express');
 	router = express.Router(),
-	registerSchema = require('../models/register'),
+        usersSchema = require('../models/users'),
 	mongoose = require('mongoose'),
 	dbUrl = require('../config/db.conf');
 
 mongoose.connect(dbUrl.url);
 
-var User = mongoose.model('users', registerSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
+var User = mongoose.model('users', usersSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
 
 /* GET users listing. */
 router.post('/', function (req, res, next) {

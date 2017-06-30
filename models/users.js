@@ -4,7 +4,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
-var registerSchema = new Schema({
+var usersSchema = new Schema({
 	username: {
 		type: String,
 		unique: true
@@ -16,4 +16,4 @@ var registerSchema = new Schema({
 	}
 });
 
-module.exports = registerSchema;
+module.exports = usersSchema;
