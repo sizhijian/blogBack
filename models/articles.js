@@ -4,15 +4,25 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 var articlesSchema = new Schema({
-    menu: String,
+    title: String,
+    author: String,
     type: String,
-    contain: [
-        {
-            title: String,
-            author: String,
-            content: String
-        }
-    ]
+    body: String,
+    // comments: [{ body: String, date: Date }],
+    created_at: { type: Date, default: Date.now }
+    // hidden: Boolean,
+    // meta: {
+    //   votes: Number,
+    //   favs: Number
+    // }
+}, {
+  versionKey: false
 });
-
+// contain: [
+//     {
+//         title: String,
+//         author: String,
+//         content: String
+//     }
+// ]
 module.exports = articlesSchema;

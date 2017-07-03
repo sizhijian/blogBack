@@ -2,6 +2,7 @@ var express = require('express'),
     router = express.Router(),
     articlesSchema = require('../models/articles'),
     mongoose = require('mongoose'),
+    moment = require('moment'),
     dbUrl = require('../config/db.conf');
 
 mongoose.connect(dbUrl.url);
@@ -17,13 +18,34 @@ router.post('/', function (req, res, next) {
 	    info:""
     };
     console.log(req.body);
-    // return;
+
+    var articles = new Articles({
+      title: req.body.title,
+      author: req.body.author,
+      type: req.body.type,
+      body: req.body.content,
+      created_at: Date.now()
+    });
+    articles.save(function (err) {
+      if(err){
+        console.log(err);
+        returnInfo.state = 0;
+        returnInfo.info = "插入失败";
+        res.send(returnInfo);
+      }else {
+        console.log("插入成功");
+        returnInfo.state = 1;
+        returnInfo.info = "插入成功";
+        res.send(returnInfo);
+      }
+    });
+    return;
     Articles.findOne({type: req.body.type},function (err, articles) {
         if(err){
             console.log(err)
         }else {
             if(articles) {
-              let flag = false;
+              var flag = false;
               for (var i = 0; i < articles.contain.length; i++) {
                 if (articles.contain[i].title == req.body.title) {
                   flag = false
@@ -36,8 +58,10 @@ router.post('/', function (req, res, next) {
                 articles.contain.push({
                     title: req.body.title,
                     author: req.body.author,
+                    date: moment(),
                     content: req.body.content
                 });
+                console.log(articles)
                 articles.save(function (err) {
                     if(err){
                         console.log("插入失败");
