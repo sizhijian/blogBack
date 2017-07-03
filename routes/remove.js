@@ -21,9 +21,8 @@ router.post('/', function (req, res, next) {
     };
     console.log(req.body);
     User.findOne({username: req.body.username})
-    .then(function (err, userDoc) {
+    .then((userDoc) => {
         console.log(userDoc)
-        return;
         if (userDoc) {
             Articles.remove({_id: req.body.id}, function (err) {
                 if (err) {
