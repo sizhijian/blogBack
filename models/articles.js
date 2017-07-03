@@ -18,11 +18,4 @@ var articlesSchema = new Schema({
 }, {
   versionKey: false
 });
-// contain: [
-//     {
-//         title: String,
-//         author: String,
-//         content: String
-//     }
-// ]
 module.exports = articlesSchema;

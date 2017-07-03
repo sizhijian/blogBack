@@ -30,7 +30,7 @@ router.post('/', function (req, res, next) {
 				returnInfo.state = 1;
 				returnInfo.info = "登陆成功";
 				returnInfo.nickname = doc.nickname;
-				
+
 			} else {
 				returnInfo.state = 0;
 				returnInfo.info = "账号或密码错误";

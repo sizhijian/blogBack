@@ -1,13 +1,16 @@
 var express = require('express'),
     router = express.Router(),
     articlesSchema = require('../models/articles'),
+    usersSchema = require('../models/users'),
     mongoose = require('mongoose'),
     moment = require('moment'),
     dbUrl = require('../config/db.conf');
 
 mongoose.connect(dbUrl.url);
 
-var Articles = mongoose.model('articles',articlesSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
+var Articles = mongoose.model('articles',articlesSchema);
+//将模式编译到模型中model('集合名称',...)会变成全小写
+var User = mongoose.model('users',usersSchema);
 
 /* GET users listing. */
 router.post('/', function (req, res, next) {
@@ -26,6 +29,7 @@ router.post('/', function (req, res, next) {
       body: req.body.content,
       created_at: Date.now()
     });
+
     articles.save(function (err) {
       if(err){
         console.log(err);

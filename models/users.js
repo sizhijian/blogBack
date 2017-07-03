@@ -14,6 +14,8 @@ var usersSchema = new Schema({
 		type:String,
 		unique: true
 	}
+}, {
+    versionKey: false
 });
 
 module.exports = usersSchema;

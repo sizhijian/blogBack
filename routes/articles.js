@@ -19,29 +19,39 @@ router.get('/', function (req, res, next) {
         info: ""
     };
     console.log(req.body);
-    var userList = [];
-    User.find().then(function(userList){
-        // console.log(userList)
-        Articles.find().sort({"created_at": -1}).exec(function (err, doc) {
-            if (err) {
-                // console.log(err)
-                return;
-            }
-            if (doc) {
-                doc.forEach(function (item) {
-                    userList.forEach(function (subitem) {
+    console.log(req.query.author);
+    if (req.query.author) {
+        Articles.find({author: req.query.author})
+        .sort({"created_at": -1}).exec(function (err, doc) {
+            console.log(doc.length);
+            returnInfo.info = doc;
+            res.send(returnInfo);
+        })
+    } else {
+        var userList = [];
+        User.find().then(function (userList) {
+            // console.log(userList)
+            Articles.find().sort({"created_at": -1}).exec(function (err, doc) {
+                if (err) {
+                    // console.log(err)
+                    return;
+                }
+                if (doc) {
+                    doc.forEach(function (item) {
+                        userList.forEach(function (subitem) {
 
-                        if(item.author == subitem.username) {
-                            item.author = subitem.nickname
-                        }
+                            if (item.author == subitem.username) {
+                                item.author = subitem.nickname
+                            }
+                        });
+
                     });
-
-                });
-                returnInfo.info = doc;
-                res.send(returnInfo);
-            }
+                    returnInfo.info = doc;
+                    res.send(returnInfo);
+                }
+            });
         });
-    });
+    }
 });
 
 module.exports = router;
