@@ -9,7 +9,8 @@ var articlesSchema = new Schema({
     type: String,
     body: String,
     // comments: [{ body: String, date: Date }],
-    created_at: { type: Date, default: Date.now }
+    created_at: { type: Date, default: Date.now },
+    updated_at: { type: Date }
     // hidden: Boolean,
     // meta: {
     //   votes: Number,

@@ -21,28 +21,66 @@ router.post('/', function (req, res, next) {
 	    info:""
     };
     console.log(req.body);
-
-    var articles = new Articles({
-      title: req.body.title,
-      author: req.body.author,
-      type: req.body.type,
-      body: req.body.content,
-      created_at: Date.now()
-    });
-
-    articles.save(function (err) {
-      if(err){
-        console.log(err);
-        returnInfo.state = 0;
-        returnInfo.info = "插入失败";
-        res.send(returnInfo);
-      }else {
-        console.log("插入成功");
-        returnInfo.state = 1;
-        returnInfo.info = "插入成功";
-        res.send(returnInfo);
-      }
-    });
+    console.log(req.body.id);
+    if(req.body.id){
+      Articles.findOne({_id: req.body.id},function (err, doc) {
+        if(err){
+          console.log(err)
+          return;
+        }
+        if(doc){
+          console.log(111111111)
+          doc.title = req.body.title;
+          doc.type = req.body.type;
+          doc.body = req.body.content;
+          doc.updated_at = Date.now();
+          doc.save(function (err) {
+            if(err){
+              console.log(err);
+              returnInfo.state = 0;
+              returnInfo.info = "更新失败";
+              res.send(returnInfo);
+              return;
+            }else {
+              console.log("更新成功");
+              returnInfo.state = 1;
+              returnInfo.info = "更新成功";
+              res.send(returnInfo);
+              return;
+            }
+          });
+        }else{
+          console.log(err);
+          returnInfo.state = 0;
+          returnInfo.info = "更新失败";
+          res.send(returnInfo);
+          return;
+        }
+      })
+    } else {
+      var articles = new Articles({
+        title: req.body.title,
+        author: req.body.author,
+        type: req.body.type,
+        body: req.body.content,
+        created_at: Date.now()
+      });
+      // res.send(returnInfo);
+      // return;
+      articles.save(function (err) {
+        if(err){
+          console.log(err);
+          returnInfo.state = 0;
+          returnInfo.info = "插入失败";
+          res.send(returnInfo);
+        }else {
+          console.log("插入成功");
+          returnInfo.state = 1;
+          returnInfo.info = "插入成功";
+          res.send(returnInfo);
+        }
+      });
+    }
     return;
     Articles.findOne({type: req.body.type},function (err, articles) {
         if(err){

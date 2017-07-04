@@ -19,8 +19,26 @@ router.get('/', function (req, res, next) {
         info: ""
     };
     console.log(req.body);
-    console.log(req.query.author);
-    if (req.query.author) {
+    console.log(req.query.id);
+    // return;
+    if (req.query.id) {
+        Articles.findOne({_id: req.query.id},function (err, doc) {
+          if (err) {
+              // console.log(err)
+              // return;
+          }
+          if(doc) {
+            console.log(doc);
+            returnInfo.state = 1;
+            returnInfo.info = doc;
+            res.send(returnInfo);
+          } else {
+            returnInfo.state = 0;
+            res.send(returnInfo);
+          }
+
+        })
+    }else if (req.query.author) {
         Articles.find({author: req.query.author})
         .sort({"created_at": -1}).exec(function (err, doc) {
             console.log(doc.length);
