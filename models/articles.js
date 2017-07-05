@@ -10,13 +10,14 @@ var articlesSchema = new Schema({
     body: String,
     // comments: [{ body: String, date: Date }],
     created_at: { type: Date, default: Date.now },
-    updated_at: { type: Date }
+    updated_at: { type: Date, default: Date.now }
     // hidden: Boolean,
     // meta: {
     //   votes: Number,
     //   favs: Number
     // }
 }, {
-  versionKey: false
+    versionKey: false,
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'}
 });
 module.exports = articlesSchema;

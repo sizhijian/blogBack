@@ -40,7 +40,7 @@ router.get('/', function (req, res, next) {
         })
     }else if (req.query.author) {
         Articles.find({author: req.query.author})
-        .sort({"created_at": -1}).exec(function (err, doc) {
+        .sort({"updated_at": -1}).exec(function (err, doc) {
             console.log(doc.length);
             returnInfo.info = doc;
             res.send(returnInfo);
@@ -49,7 +49,7 @@ router.get('/', function (req, res, next) {
         var userList = [];
         User.find().then(function (userList) {
             // console.log(userList)
-            Articles.find().sort({"created_at": -1}).exec(function (err, doc) {
+            Articles.find().sort({"updated_at": -1}).exec(function (err, doc) {
                 if (err) {
                     // console.log(err)
                     return;

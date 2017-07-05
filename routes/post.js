@@ -33,7 +33,7 @@ router.post('/', function (req, res, next) {
           doc.title = req.body.title;
           doc.type = req.body.type;
           doc.body = req.body.content;
-          doc.updated_at = Date.now();
+          // doc.updated_at = Date.now();
           doc.save(function (err) {
             if(err){
               console.log(err);
@@ -63,7 +63,7 @@ router.post('/', function (req, res, next) {
         author: req.body.author,
         type: req.body.type,
         body: req.body.content,
-        created_at: Date.now()
+        // created_at: Date.now()
       });
       // res.send(returnInfo);
       // return;
