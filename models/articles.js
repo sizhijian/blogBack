@@ -8,7 +8,12 @@ var articlesSchema = new Schema({
     author: String,
     type: String,
     body: String,
-    // comments: [{ body: String, date: Date }],
+    comments: [{
+        reviewer: String,
+        body: String,
+        date: { type: Date, default: Date.now },
+        isAuthor: Boolean
+    }],
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
     isAuthor: Boolean

@@ -60,6 +60,12 @@ router.get('/', function (req, res, next) {
                                 if (item.author == req.query.username) {
                                     item.isAuthor = true;
                                 }
+                                item.comments.forEach(function(item) {
+                                    item.isAuthor = false;
+                                    if (item.reviewer == subitem.username) {
+                                        item.isAuthor = true;
+                                    }
+                                })
                             });
                         });
                     }
@@ -68,6 +74,11 @@ router.get('/', function (req, res, next) {
                             if (item.author == subitem.username) {
                                 item.author = subitem.nickname;
                             }
+                            item.comments.forEach(function(item) {
+                                if (item.reviewer == subitem.username) {
+                                    item.reviewer = subitem.nickname;
+                                }
+                            })
                         });
                     });
                     returnInfo.info = doc;

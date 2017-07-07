@@ -19,7 +19,8 @@ var register = require('./routes/register'),
     articlesType = require('./routes/articlesType'),
     post = require('./routes/post'),
     modify = require('./routes/modify'),
-    remove = require('./routes/remove');
+    remove = require('./routes/remove'),
+    comment = require('./routes/comment');
 //
 
 var app = express();
@@ -58,6 +59,7 @@ app.use('/articlesType', articlesType);
 app.use('/post', post);
 app.use('/modify', modify);
 app.use('/remove', remove);
+app.use('/comment', comment);
 /*
  * shop-api-end
  * */
