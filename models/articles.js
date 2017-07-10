@@ -24,6 +24,6 @@ var articlesSchema = new Schema({
     // }
 }, {
     versionKey: false,
-    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'}
+    timestamps: { createdAt: 'created_at'}
 });
 module.exports = articlesSchema;

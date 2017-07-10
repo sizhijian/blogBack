@@ -33,7 +33,7 @@ router.post('/', function (req, res, next) {
           doc.title = req.body.title;
           doc.type = req.body.type;
           doc.body = req.body.content;
-          // doc.updated_at = Date.now();
+          doc.updated_at = new Date();
           doc.save(function (err) {
             if(err){
               console.log(err);
