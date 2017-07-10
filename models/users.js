@@ -13,7 +13,9 @@ var usersSchema = new Schema({
 	nickname: {
 		type:String,
 		unique: true
-	}
+	},
+	avatarUrl: String
+
 }, {
     versionKey: false
 });

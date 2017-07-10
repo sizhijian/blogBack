@@ -20,7 +20,8 @@ var register = require('./routes/register'),
     post = require('./routes/post'),
     modify = require('./routes/modify'),
     remove = require('./routes/remove'),
-    comment = require('./routes/comment');
+    comment = require('./routes/comment'),
+    upload = require('./routes/upload');
 //
 
 var app = express();
@@ -60,6 +61,7 @@ app.use('/post', post);
 app.use('/modify', modify);
 app.use('/remove', remove);
 app.use('/comment', comment);
+app.use('/upload', upload);
 /*
  * shop-api-end
  * */
