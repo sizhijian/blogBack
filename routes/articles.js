@@ -73,6 +73,8 @@ router.get('/', function (req, res, next) {
                         userList.forEach(function (subitem) {
                             if (item.author == subitem.username) {
                                 item.author = subitem.nickname;
+                                item.avatarUrl = subitem.avatarUrl;
+                                console.log(subitem.avatarUrl)
                             }
                             item.comments.forEach(function(item) {
                                 if (item.reviewer == subitem.username) {

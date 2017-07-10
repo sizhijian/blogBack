@@ -16,7 +16,8 @@ var articlesSchema = new Schema({
     }],
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
-    isAuthor: Boolean
+    isAuthor: Boolean,
+    avatarUrl: String
     // hidden: Boolean,
     // meta: {
     //   votes: Number,

@@ -22,7 +22,7 @@ router.post('/', function (req, res, next) {
     form.on('error', function(err) {
       console.log('Error parsing form: ' + err.stack);
     });
-    form.uploadDir = __dirname + "./../public/files/";//设置文件存储路径
+    form.uploadDir = __dirname + "/../public/files/";//设置文件存储路径
     //上传完成后处理
     form.parse(req, function (err, fields, files) {
         var filesTmp = JSON.stringify(files, null, 2);
@@ -35,19 +35,21 @@ router.post('/', function (req, res, next) {
             //重命名为真实文件名
             fs.rename(
               inputFile.path,
-              form.uploadDir + inputFile.originalFilename,
+              form.uploadDir + "/"+ inputFile.originalFilename,
               function (err) {
                 if (err) {
                     console.log('rename error: ' + err);
                 } else {
                     console.log('rename ok');
+                    console.log(username)
                     User.findOne({username: username}, function(err, doc){
                       if(err){
                         console.log(err);
                         return;
                       }
                       if (doc) {
-                        doc.avatarUrl = 'http://sizhijian.com:3000/files/' + inputFile.originalFilename;
+                        doc.avatarUrl = 'http://192.168.1.102:3000/files/' + inputFile.originalFilename;
+                        // doc.avatarUrl = 'http://sizhijian.com:3000/files/' + inputFile.originalFilename;
                         doc.save(function(err){
                           if (err) {
                             console.log(err)
