@@ -79,6 +79,7 @@ router.get('/', function (req, res, next) {
                             item.comments.forEach(function(item) {
                                 if (item.reviewer == subitem.username) {
                                     item.reviewer = subitem.nickname;
+                                    item.avatarUrl = subitem.avatarUrl;
                                 }
                             })
                         });

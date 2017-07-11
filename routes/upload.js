@@ -48,8 +48,8 @@ router.post('/', function (req, res, next) {
                         return;
                       }
                       if (doc) {
-                        doc.avatarUrl = 'http://192.168.1.102:3000/files/' + inputFile.originalFilename;
-                        // doc.avatarUrl = 'http://sizhijian.com:3000/files/' + inputFile.originalFilename;
+                        // doc.avatarUrl = 'http://192.168.1.68:3000/files/' + inputFile.originalFilename;
+                        doc.avatarUrl = 'http://sizhijian.com:3000/files/' + inputFile.originalFilename;
                         doc.save(function(err){
                           if (err) {
                             console.log(err)

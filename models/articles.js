@@ -12,6 +12,7 @@ var articlesSchema = new Schema({
         reviewer: String,
         body: String,
         date: { type: Date, default: Date.now },
+        avatarUrl: String,
         isAuthor: Boolean
     }],
     created_at: { type: Date, default: Date.now },
