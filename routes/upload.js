@@ -5,7 +5,9 @@ var express = require('express'),
     dbUrl = require('../config/db.conf'),
     multiparty = require('multiparty'),
     util = require('util'),
-    fs = require('fs')
+    fs = require('fs'),
+    Clipper = require('image-clipper');
+
 
 mongoose.connect(dbUrl.url);
 
@@ -25,6 +27,10 @@ router.post('/', function (req, res, next) {
     form.uploadDir = __dirname + "/../public/files/";//设置文件存储路径
     //上传完成后处理
     form.parse(req, function (err, fields, files) {
+        console.log(files.file[0].path)
+        Clipper(files.file[0].path, {quality: 50}, function() {
+
+        });
         var filesTmp = JSON.stringify(files, null, 2);
             var username = fields.username[0];
 
@@ -48,8 +54,8 @@ router.post('/', function (req, res, next) {
                         return;
                       }
                       if (doc) {
-                        // doc.avatarUrl = 'http://192.168.1.68:3000/files/' + inputFile.originalFilename;
-                        doc.avatarUrl = 'http://sizhijian.com:3000/files/' + inputFile.originalFilename;
+                        doc.avatarUrl = 'http://192.168.1.100:3000/files/' + inputFile.originalFilename;
+                        // doc.avatarUrl = 'http://sizhijian.com:3000/files/' + inputFile.originalFilename;
                         doc.save(function(err){
                           if (err) {
                             console.log(err)
