@@ -5,7 +5,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
     dbUrl = require('../config/db.conf');
 
-mongoose.connect(dbUrl.url);
+mongoose.connect(dbUrl.url, {useMongoClient:true});
 
 var Articles = mongoose.model('articles', articlesSchema);
 //将模式编译到模型中model('集合名称',...)会变成全小写

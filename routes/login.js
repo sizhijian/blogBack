@@ -4,7 +4,7 @@ var express = require('express');
 	mongoose = require('mongoose'),
 	dbUrl = require('../config/db.conf');
 
-mongoose.connect(dbUrl.url);
+mongoose.connect(dbUrl.url, {useMongoClient:true});
 
 var User = mongoose.model('users', usersSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
 
@@ -27,7 +27,6 @@ router.get('/', function (req, res, next) {
 				returnInfo.state = 1;
 				returnInfo.info = doc.avatarUrl;
 				res.send(returnInfo);
-				return;
 			}
 		})
 	}

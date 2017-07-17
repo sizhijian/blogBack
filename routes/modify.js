@@ -4,13 +4,13 @@ var express = require('express'),
     mongoose = require('mongoose'),
     dbUrl = require('../config/db.conf');
 
-mongoose.connect(dbUrl.url);
+mongoose.connect(dbUrl.url, {useMongoClient:true});
 
 var User = mongoose.model('users',usersSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
 
 /* GET users listing. */
 router.post('/', function (req, res, next) {
-    
+
     res.header("Access-Control-Allow-Origin", "*");
     var returnInfo = {
 	    state: null,
@@ -70,7 +70,7 @@ router.post('/', function (req, res, next) {
     // res.header("Access-Control-Allow-Headers", "X-Requested-With");
     // res.header("Access-Control-Allow-Headers", "Content-Type");
     // res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-    
+
 });
 
 module.exports = router;

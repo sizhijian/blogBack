@@ -5,11 +5,10 @@ var express = require('express'),
     dbUrl = require('../config/db.conf'),
     multiparty = require('multiparty'),
     util = require('util'),
-    fs = require('fs'),
-    Clipper = require('image-clipper');
+    fs = require('fs');
 
 
-mongoose.connect(dbUrl.url);
+mongoose.connect(dbUrl.url, {useMongoClient:true});
 
 var User = mongoose.model('users',usersSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
 
@@ -23,14 +22,14 @@ router.post('/', function (req, res, next) {
     var form = new multiparty.Form();//生成multiparty对象，并配置上传目标路径
     form.on('error', function(err) {
       console.log('Error parsing form: ' + err.stack);
+      return;
     });
     form.uploadDir = __dirname + "/../public/files/";//设置文件存储路径
     //上传完成后处理
     form.parse(req, function (err, fields, files) {
         console.log(files.file[0].path)
-        Clipper(files.file[0].path, {quality: 50}, function() {
-
-        });
+        // res.send(returnInfo);
+        // return;
         var filesTmp = JSON.stringify(files, null, 2);
             var username = fields.username[0];
 
@@ -54,8 +53,8 @@ router.post('/', function (req, res, next) {
                         return;
                       }
                       if (doc) {
-                        doc.avatarUrl = 'http://192.168.1.100:3000/files/' + inputFile.originalFilename;
-                        // doc.avatarUrl = 'http://sizhijian.com:3000/files/' + inputFile.originalFilename;
+                        // doc.avatarUrl = 'http://192.168.1.100:3000/files/' + inputFile.originalFilename;
+                        doc.avatarUrl = 'http://sizhijian.com:3000/files/' + inputFile.originalFilename;
                         doc.save(function(err){
                           if (err) {
                             console.log(err)
