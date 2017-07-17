@@ -5,13 +5,22 @@ var express = require('express'),
     dbUrl = require('../config/db.conf'),
     multiparty = require('multiparty'),
     util = require('util'),
-    fs = require('fs');
+    fs = require('fs'),
+    Clipper = require('image-clipper');
 
 
 mongoose.connect(dbUrl.url, {useMongoClient:true});
 
 var User = mongoose.model('users',usersSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
-
+Clipper('../public/files/iamge.png', function(err) {
+    // this.crop(20, 20, 100, 100)
+    // .resize(50, 50)
+    console.log(err);return;
+    this.quality(80)
+    .toFile('../public/files/result.jpg', function() {
+       console.log('saved!');
+   });
+});
 /* GET users listing. */
 router.post('/', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -24,12 +33,32 @@ router.post('/', function (req, res, next) {
       console.log('Error parsing form: ' + err.stack);
       return;
     });
-    form.uploadDir = __dirname + "/../public/files/";//设置文件存储路径
+    form.uploadDir = __dirname + "./../public/files/";//设置文件存储路径
     //上传完成后处理
     form.parse(req, function (err, fields, files) {
-        console.log(files.file[0].path)
-        // res.send(returnInfo);
-        // return;
+      console.log("1" + files.file[0].path);
+      imageMagick(files.file[0].path)
+      .resize(240, 240, "!")
+      .autoOrient()
+      .write(form.uploadDir + "sizhijian.png", function (err) {
+        console.log(err);
+        console.log("textextetxtetxtextgetxtet");
+        if (!err) console.log('done');
+      });
+      res.send(returnInfo);
+      return;
+  //{ file:
+  //  [ { fieldName: 'file',
+  //      originalFilename: '微信图片_20170713183621.png',
+  //      path: 'D:\\shop-api\\public\\files\\MB6EDetCY2WaFIqO4iiPGT0R.png',
+  //      headers: [Object],
+  //      size: 1348825 } ] }
+      res.send(returnInfo);
+      return;
+        console.log(files.file[0].path);
+
+        res.send(returnInfo);
+        return;
         var filesTmp = JSON.stringify(files, null, 2);
             var username = fields.username[0];
 
@@ -53,8 +82,8 @@ router.post('/', function (req, res, next) {
                         return;
                       }
                       if (doc) {
-                        // doc.avatarUrl = 'http://192.168.1.100:3000/files/' + inputFile.originalFilename;
-                        doc.avatarUrl = 'http://sizhijian.com:3000/files/' + inputFile.originalFilename;
+                        doc.avatarUrl = 'http://192.168.1.100:3000/files/' + inputFile.originalFilename;
+                        // doc.avatarUrl = 'http://sizhijian.com:3000/files/' + inputFile.originalFilename;
                         doc.save(function(err){
                           if (err) {
                             console.log(err)
