@@ -5,22 +5,11 @@ var express = require('express'),
     dbUrl = require('../config/db.conf'),
     multiparty = require('multiparty'),
     util = require('util'),
-    fs = require('fs'),
-    Clipper = require('image-clipper');
+    fs = require('fs');
 
 
 mongoose.connect(dbUrl.url, {useMongoClient:true});
-
 var User = mongoose.model('users',usersSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
-Clipper('../public/files/iamge.png', function(err) {
-    // this.crop(20, 20, 100, 100)
-    // .resize(50, 50)
-    console.log(err);return;
-    this.quality(80)
-    .toFile('../public/files/result.jpg', function() {
-       console.log('saved!');
-   });
-});
 /* GET users listing. */
 router.post('/', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -37,14 +26,6 @@ router.post('/', function (req, res, next) {
     //上传完成后处理
     form.parse(req, function (err, fields, files) {
       console.log("1" + files.file[0].path);
-      imageMagick(files.file[0].path)
-      .resize(240, 240, "!")
-      .autoOrient()
-      .write(form.uploadDir + "sizhijian.png", function (err) {
-        console.log(err);
-        console.log("textextetxtetxtextgetxtet");
-        if (!err) console.log('done');
-      });
       res.send(returnInfo);
       return;
   //{ file:
@@ -82,7 +63,7 @@ router.post('/', function (req, res, next) {
                         return;
                       }
                       if (doc) {
-                        doc.avatarUrl = 'http://192.168.1.100:3000/files/' + inputFile.originalFilename;
+                        doc.avatarUrl = 'http://192.168.1.91:3000/files/' + inputFile.originalFilename;
                         // doc.avatarUrl = 'http://sizhijian.com:3000/files/' + inputFile.originalFilename;
                         doc.save(function(err){
                           if (err) {
