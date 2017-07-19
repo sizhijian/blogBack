@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
         info: ""
     };
     // console.log(req.body);
-    // console.log(req.query);
+    console.log(req.query.skip);
      if (req.query.id) {
         Articles.findOne({_id: req.query.id}, function (err, doc) {
             if (err) {
@@ -50,7 +50,7 @@ router.get('/', function (req, res, next) {
     } else {
         User.find().then(function (userList) {
             // console.log(userList)
-            Articles.find().sort({"updated_at": -1}).exec(function (err, doc) {
+            Articles.find().skip(req.query.skip * 10).limit(10).sort({"updated_at": -1}).exec(function (err, doc) {
                 if (err) {
                     console.log(err)
                     return;
