@@ -8,7 +8,13 @@ mongoose.connect(dbUrl.url, {useMongoClient:true});
 
 var User = mongoose.model('users',usersSchema);//将模式编译到模型中model('集合名称',...)会变成全小写
 
-/* GET users listing. */
+router.options('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.end();
+});
+
+/* POST users listing. */
 router.post('/', function (req, res, next) {
 
     res.header("Access-Control-Allow-Origin", "*");

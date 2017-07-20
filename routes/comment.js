@@ -12,6 +12,11 @@ var Articles = mongoose.model('articles',articlesSchema);
 //将模式编译到模型中model('集合名称',...)会变成全小写
 var User = mongoose.model('users',usersSchema);
 
+router.options('/', function (req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Content-Type");
+	res.end();
+})
 /* GET users listing. */
 router.post('/', function (req, res, next) {
 

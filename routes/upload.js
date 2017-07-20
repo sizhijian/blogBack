@@ -6,6 +6,7 @@ var express = require('express'),
   multiparty = require('multiparty'),
   util = require('util'),
   images = require('images'),
+  path = require('path'),
   fs = require('fs');
 
 mongoose.connect(dbUrl.url, {
@@ -13,7 +14,7 @@ mongoose.connect(dbUrl.url, {
 });
 var User = mongoose.model('users', usersSchema); //将模式编译到模型中model('集合名称',...)会变成全小写
 
-
+console.log(path.join(__dirname , "./../public/files/"))
 /* GET users listing. */
 router.post('/', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -21,6 +22,24 @@ router.post('/', function(req, res, next) {
     state: 0,
     info: ""
   };
+  console.log(req.body.imageURL)
+  let base64Data = req.body.imageURL.replace(/^data:image\/\w+;base64,/, ""),
+  dataBuffer = new Buffer(base64Data, 'base64');
+  fs.writeFile(path.join(__dirname , "./../public/files/") + req.body.username + ".png", dataBuffer, function(err) {
+            if(err){
+              console.log(err)
+                res.send(err);
+
+                return;
+            }else{
+              console.log("success..")
+                res.send("ok");
+                return;
+            }
+        });
+
+  // res.send(returnInfo);
+  return;
   var form = new multiparty.Form(); //生成multiparty对象，并配置上传目标路径
   form.on('error', function(err) {
     console.log('Error parsing form: ' + err.stack);
