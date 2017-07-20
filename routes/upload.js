@@ -14,29 +14,57 @@ mongoose.connect(dbUrl.url, {
 });
 var User = mongoose.model('users', usersSchema); //将模式编译到模型中model('集合名称',...)会变成全小写
 
-console.log(path.join(__dirname , "./../public/files/"))
-/* GET users listing. */
+router.options('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.end();
+});
+
+/* POST users listing. */
 router.post('/', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   var returnInfo = {
     state: 0,
     info: ""
   };
-  console.log(req.body.imageURL)
+  // console.log(req.body.username)
   let base64Data = req.body.imageURL.replace(/^data:image\/\w+;base64,/, ""),
-  dataBuffer = new Buffer(base64Data, 'base64');
-  fs.writeFile(path.join(__dirname , "./../public/files/") + req.body.username + ".png", dataBuffer, function(err) {
-            if(err){
+    dataBuffer = new Buffer(base64Data, 'base64');
+  fs.writeFile(path.join(__dirname, "./../public/files/") + req.body.username + ".png", dataBuffer, function(err) {
+    if (err) {
+      console.log(err)
+      returnInfo.info = '头像上传失败';
+      res.send(err);
+      return;
+    } else {
+      console.log("图片写入本地成功🤔")
+      User.findOne({
+        username: req.body.username
+      }, function(err, doc) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        if (doc) {
+          // doc.avatarUrl = 'http://192.168.1.91:3000/files/' + req.body.username + ".png?" + Math.random();
+          doc.avatarUrl = 'http://sizhijian.com:3000/files/' + req.body.username + ".png" + Math.random();
+          doc.save(function(err) {
+            if (err) {
               console.log(err)
-                res.send(err);
-
-                return;
-            }else{
-              console.log("success..")
-                res.send("ok");
-                return;
+              returnInfo.info = '头像上传失败😞';
+              res.send(returnInfo)
+              return;
             }
-        });
+            console.log('头像上传成功🤔')
+            returnInfo.state = 1;
+            returnInfo.info = '头像上传成功';
+            res.send(returnInfo)
+            return;
+          })
+        }
+      });
+    }
+  });
 
   // res.send(returnInfo);
   return;
@@ -56,7 +84,7 @@ router.post('/', function(req, res, next) {
       var filesTmp = JSON.stringify(files, null, 2);
       var username = fields.username[0];
       let imagesObj = images(files.file[0].path);
-      let imagesSize = 300;
+      let imagesSize = 400;
       if (imagesObj.width() > imagesObj.height() && imagesObj.width() > imagesSize) {
         imagesObj.resize(imagesSize, null);
       } else if (imagesObj.width() < imagesObj.height() && imagesObj.height() > imagesSize) {
@@ -68,7 +96,7 @@ router.post('/', function(req, res, next) {
           function() {
             console.log('rename ok');
             console.log(username);
-            fs.unlink(files.file[0].path,function(){
+            fs.unlink(files.file[0].path, function() {
               console.log("源文件删除成功")
             })
             User.findOne({

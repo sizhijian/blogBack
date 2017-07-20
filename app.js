@@ -33,8 +33,8 @@ app.set('view engine', 'ejs');//设置视图模板引擎为 ejs
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));//设置/public/favicon.ico为favicon图标
 app.use(logger('dev'));//加载日志中间件
-app.use(bodyParser.json());//加载解析json的中间件
-app.use(bodyParser.urlencoded({ extended: false }));//加载解析urlencoded请求体的中间件。
+app.use(bodyParser.json({limit: '1000kb'}));//加载解析json的中间件
+app.use(bodyParser.urlencoded({ extended: true }));//加载解析urlencoded请求体的中间件。
 app.use(cookieParser());//加载解析cookie的中间件
 app.use(express.static(path.join(__dirname, 'public')));//设置静态资源路径
 
