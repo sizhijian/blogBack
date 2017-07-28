@@ -7,6 +7,10 @@ var articlesSchema = new Schema({
     title: String,
     author: String,
     type: String,
+    summary: {
+      body: String,
+      more: Boolean
+    },
     body: String,
     comments: [{
         reviewer: String,

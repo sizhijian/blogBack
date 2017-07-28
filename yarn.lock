@@ -686,6 +686,10 @@ string_decoder@~1.0.0:
   dependencies:
     safe-buffer "~5.1.0"
 
+trim-html@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/trim-html/-/trim-html-0.1.9.tgz#a6e60ad7215e22da3370e47b6c3453a7cc9d4b3e"
+
 type-is@~1.6.15:
   version "1.6.15"
   resolved "https://registry.yarnpkg.com/type-is/-/type-is-1.6.15.tgz#cab10fb4909e441c82842eafe1ad646c81804410"
